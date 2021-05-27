@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Telegram Changer</string>
+    <string name="package_name">应用包名</string>
+    <string name="generate_package_name">生成包名</string>
+    <string name="apk_file">Apk文件</string>
+    <string name="select">选择</string>
+    <string name="generate">生成</string>
+    <string name="or">或</string>
+    <string name="download">下载</string>
+    <string name="about">关于</string>
+    <string name="telegram_official_telegram_org">官方Telegram：telegram.org</string>
+    <string name="telegram_foss_f_droid">FOSS版Telegram</string>
+    <string name="neko_x_f_droid">F-droid上的NekoX</string>
+    <string name="source_link">从：</string>
+    <string name="about_main">此应用遵循GNU General Public License。更多信息请查看以下链接：</string>
+    <string name="about_version">版本：</string>
+    <string name="get_write_permission">请授予读取内部存储的权限（非必须）</string>
+    <string name="downloading">下载中......</string>
+    <string name="main_loading">生成中......</string>
+    <string name="generate_error_no_apk">没有Apk文件！</string>
+    <string name="package_label">应用名</string>
+    <string name="download_complete">下载完成</string>
+    <string name="main_input_hint">请输入内容。</string>
+    <string name="main_package_name_error">应用包名格式错误。正确格式例：com.xxx.xxx</string>
+    <string name="generate_success">生成成功！在 /Android/data/com.android.telegramchanger/cache/out.apk</string>
+    <string name="about_lib_header">感谢：</string>
+</resources>
