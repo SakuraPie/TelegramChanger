@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            android:background="@drawable/background_shape">
+
+            <EditText
+                android:id="@+id/edit_package_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:maxLength="20"
+                android:inputType="text"
+                android:hint="@string/package_name"
+                android:importantForAutofill="no"
+                tools:ignore="NestedWeights" />
+
+            <ImageButton
+                android:id="@+id/generate_package_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_baseline_dehaze_24"
+                android:contentDescription="@string/generate_package_name" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/background_shape">
+
+            <EditText
+                android:id="@+id/edit_apk_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:maxLength="15"
+                android:inputType="text"
+                android:hint="@string/package_label"
+                android:importantForAutofill="no"
+                tools:ignore="NestedWeights" />
+
+            <ImageButton
+                android:id="@+id/generate_package_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_baseline_dehaze_24"
+                android:contentDescription="@string/generate_package_label" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/background_shape">
+
+            <TextView
+                android:id="@+id/apk_file_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/apk_file"
+                tools:ignore="NestedWeights,RtlHardcoded" />
+
+            <Button
+                android:id="@+id/main_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/or" />
+
+            <Button
+                android:id="@+id/main_download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/download" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/main_generate"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="80dp"
+                android:layout_weight="1"
+                android:text="@string/generate"
+                tools:ignore="NestedWeights" />
+
+            <Button
+                android:id="@+id/main_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/about" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RadioGroup
+        android:id="@+id/download_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
+
+        <RadioButton
+            android:id="@+id/download_official"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/telegram_official_telegram_org" />
+
+        <RadioButton
+            android:id="@+id/download_foss"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/telegram_foss_f_droid" />
+
+        <RadioButton
+            android:id="@+id/download_nekox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/neko_x_f_droid" />
+
+        <TextView
+            android:id="@+id/source_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/source_link" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_marginTop="20dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:max="100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/download_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:text="@string/download" />
+    </RadioGroup>
+</LinearLayout>

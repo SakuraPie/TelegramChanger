@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Telegram Changer</string>
+    <string name="package_name">Package Name</string>
+    <string name="generate_package_name">Generate Package Name</string>
+    <string name="apk_file">Apk File</string>
+    <string name="select">Select</string>
+    <string name="generate">Generate</string>
+    <string name="or">or</string>
+    <string name="download">Download</string>
+    <string name="about">About</string>
+    <string name="telegram_official_telegram_org">Telegram (Official) : telegram.org</string>
+    <string name="telegram_foss_f_droid">Telegram FOSS : F-Droid</string>
+    <string name="neko_x_f_droid">Neko X : F-droid</string>
+    <string name="source_link">From:</string>
+    <string name="about_main">This app was created under the terms of the GNU General Public License.
+        For more information please check out the link below: </string>
+    <string name="gnu_link">https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_version">Version: </string>
+    <string name="get_write_permission">Please give the permission to write to the storage.</string>
+    <string name="downloading">Downloading…</string>
+    <string name="main_loading">Loading…</string>
+    <string name="generate_error_no_apk">No APK!</string>
+    <string name="package_label">App Name</string>
+    <string name="generate_package_label">generate_pkg_label</string>
+    <string name="download_complete">download completed!</string>
+    <string name="main_input_hint">Please Input.</string>
+    <string name="main_package_name_error">Package name incorrect. Example: com.xxx.xxx.</string>
+    <string name="generate_success">Generate Success in /Android/data/com.android.telegramchanger/cache/out.apk</string>
+    <string name="about_lib_header">Thanks:</string>
+    <string name="library_1">https://github.com/jhy/jsoup (MIT License)</string>
+    <string name="library_2">https://github.com/kittinunf/fuel (MIT License)</string>
+    <string name="library_3">https://github.com/topjohnwu/Magisk (GPL 3.0)</string>
+</resources>
