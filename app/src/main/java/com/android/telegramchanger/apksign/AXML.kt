@@ -32,7 +32,6 @@ class AXML(b: ByteArray) {
      */
     fun findAndPatch(vararg patterns: Pair<String, String>): Boolean {
         val buffer = ByteBuffer.wrap(bytes).order(LITTLE_ENDIAN)
-
         fun findStringPool(): Int {
             var offset = 8
             while (offset < bytes.size) {
