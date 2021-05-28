@@ -1,30 +1,31 @@
-package com.android.telegramchanger.apksign;
+package com.android.telegramchanger.apksign
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.InputStream
 
-public class ByteArrayStream extends ByteArrayOutputStream {
-
-    public synchronized void readFrom(InputStream is) {
-        readFrom(is, Integer.MAX_VALUE);
+class ByteArrayStream : ByteArrayOutputStream() {
+    @Synchronized
+    fun readFrom(`is`: InputStream) {
+        readFrom(`is`, Int.MAX_VALUE)
     }
 
-    public synchronized void readFrom(InputStream is, int len) {
-        int read;
-        byte[] buffer = new byte[4096];
+    @Synchronized
+    fun readFrom(`is`: InputStream, l: Int) {
+        var len = l
+        var read: Int
+        val buffer = ByteArray(4096)
         try {
-            while ((read = is.read(buffer, 0, Math.min(len, buffer.length))) > 0) {
-                write(buffer, 0, read);
-                len -= read;
+            while (`is`.read(buffer, 0, len.coerceAtMost(buffer.size)).also { read = it } > 0) {
+                write(buffer, 0, read)
+                len -= read
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
     }
 
-    public ByteArrayInputStream getInputStream() {
-        return new ByteArrayInputStream(buf, 0, count);
-    }
+    val inputStream: ByteArrayInputStream
+        get() = ByteArrayInputStream(buf, 0, count)
 }

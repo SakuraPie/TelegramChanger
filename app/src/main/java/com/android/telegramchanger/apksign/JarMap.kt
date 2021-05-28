@@ -1,166 +1,144 @@
-package com.android.telegramchanger.apksign;
+package com.android.telegramchanger.apksign
 
-import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.LinkedHashMap;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import java.util.jar.JarInputStream;
-import java.util.jar.Manifest;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import java.io.*
+import java.util.*
+import java.util.jar.JarEntry
+import java.util.jar.JarFile
+import java.util.jar.JarInputStream
+import java.util.jar.Manifest
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
 
-public abstract class JarMap implements Closeable {
+abstract class JarMap : Closeable {
+    var entryMap: LinkedHashMap<String, JarEntry>? = null
+//    open val file: File?
+//        get() = null
+    open fun getFile(): File? = null
 
-    LinkedHashMap<String, JarEntry> entryMap;
-
-    public static JarMap open(File file, boolean verify) throws IOException {
-        return new FileMap(file, verify, ZipFile.OPEN_READ);
+    abstract fun getManifest(): Manifest?
+//    abstract val manifest: Manifest?
+    @Throws(IOException::class)
+    open fun getInputStream(ze: ZipEntry): InputStream? {
+        val e = getMapEntry(ze.name)
+        return e?.data?.inputStream
     }
 
-    public static JarMap open(InputStream is, boolean verify) throws IOException {
-        return new StreamMap(is, verify);
+    fun getOutputStream(ze: ZipEntry): OutputStream {
+        if (entryMap == null) entryMap = LinkedHashMap()
+        val e = JarMapEntry(ze.name)
+        entryMap!![ze.name] = e
+        return e.data
     }
 
-    public File getFile() {
-        return null;
+    @Throws(IOException::class)
+    open fun getRawData(ze: ZipEntry): ByteArray? {
+        val e = getMapEntry(ze.name)
+        return e?.data?.toByteArray()
     }
 
-    public abstract Manifest getManifest() throws IOException;
-
-    public InputStream getInputStream(ZipEntry ze) throws IOException {
-        JarMapEntry e = getMapEntry(ze.getName());
-        return e != null ? e.data.getInputStream() : null;
+    abstract fun entries(): Enumeration<JarEntry>?
+    fun getEntry(name: String): ZipEntry? {
+        return getJarEntry(name)
     }
 
-    public OutputStream getOutputStream(ZipEntry ze) {
-        if (entryMap == null)
-            entryMap = new LinkedHashMap<>();
-        JarMapEntry e = new JarMapEntry(ze.getName());
-        entryMap.put(ze.getName(), e);
-        return e.data;
+    open fun getJarEntry(name: String): JarEntry? {
+        return getMapEntry(name)
     }
 
-    public byte[] getRawData(ZipEntry ze) throws IOException {
-        JarMapEntry e = getMapEntry(ze.getName());
-        return e != null ? e.data.toByteArray() : null;
+    fun getMapEntry(name: String): JarMapEntry? {
+        var e: JarMapEntry? = null
+        if (entryMap != null) e = entryMap!![name] as JarMapEntry?
+        return e
     }
 
-    public abstract Enumeration<JarEntry> entries();
-
-    public final ZipEntry getEntry(String name) {
-        return getJarEntry(name);
-    }
-
-    public JarEntry getJarEntry(String name) {
-        return getMapEntry(name);
-    }
-
-    JarMapEntry getMapEntry(String name) {
-        JarMapEntry e = null;
-        if (entryMap != null)
-            e = (JarMapEntry) entryMap.get(name);
-        return e;
-    }
-
-    private static class FileMap extends JarMap {
-
-        private JarFile jarFile;
-
-        FileMap(File file, boolean verify, int mode) throws IOException {
-            jarFile = new JarFile(file, verify, mode);
+    private class FileMap(file: File?, verify: Boolean, mode: Int) : JarMap() {
+        private val jarFile: JarFile = JarFile(file, verify, mode)
+        override fun getFile(): File {
+            return File(jarFile.name)
         }
 
-        @Override
-        public File getFile() {
-            return new File(jarFile.getName());
+        @Throws(IOException::class)
+        override fun getManifest(): Manifest? {
+            return jarFile.manifest
         }
 
-        @Override
-        public Manifest getManifest() throws IOException {
-            return jarFile.getManifest();
+        @Throws(IOException::class)
+        override fun getInputStream(ze: ZipEntry): InputStream? {
+            val `is` = super.getInputStream(ze)
+            return `is` ?: jarFile.getInputStream(ze)
         }
 
-        @Override
-        public InputStream getInputStream(ZipEntry ze) throws IOException {
-            InputStream is = super.getInputStream(ze);
-            return is != null ? is : jarFile.getInputStream(ze);
+        @Throws(IOException::class)
+        override fun getRawData(ze: ZipEntry): ByteArray? {
+            val b = super.getRawData(ze)
+            if (b != null) return b
+            val bytes = ByteArrayStream()
+            bytes.readFrom(jarFile.getInputStream(ze))
+            return bytes.toByteArray()
         }
 
-        @Override
-        public byte[] getRawData(ZipEntry ze) throws IOException {
-            byte[] b = super.getRawData(ze);
-            if (b != null)
-                return b;
-            ByteArrayStream bytes = new ByteArrayStream();
-            bytes.readFrom(jarFile.getInputStream(ze));
-            return bytes.toByteArray();
+        override fun entries(): Enumeration<JarEntry>? {
+            return jarFile.entries()
         }
 
-        @Override
-        public Enumeration<JarEntry> entries() {
-            return jarFile.entries();
+        override fun getJarEntry(name: String): JarEntry? {
+            val e: JarEntry? = getMapEntry(name)
+            return e ?: jarFile.getJarEntry(name)
         }
 
-        @Override
-        public JarEntry getJarEntry(String name) {
-            JarEntry e = getMapEntry(name);
-            return e != null ? e : jarFile.getJarEntry(name);
+        @Throws(IOException::class)
+        override fun close() {
+            jarFile.close()
         }
 
-        @Override
-        public void close() throws IOException {
-            jarFile.close();
-        }
     }
 
-    private static class StreamMap extends JarMap {
+    private class StreamMap(`is`: InputStream?, verify: Boolean) : JarMap() {
+        private val jis: JarInputStream = JarInputStream(`is`, verify)
+        override fun getManifest(): Manifest? {
+            return jis.manifest
+        }
 
-        private JarInputStream jis;
+        override fun entries(): Enumeration<JarEntry>? {
+            return Collections.enumeration(entryMap!!.values)
+        }
 
-        StreamMap(InputStream is, boolean verify) throws IOException {
-            jis = new JarInputStream(is, verify);
-            entryMap = new LinkedHashMap<>();
-            JarEntry entry;
-            while ((entry = jis.getNextJarEntry()) != null) {
-                entryMap.put(entry.getName(), new JarMapEntry(entry, jis));
+        @Throws(IOException::class)
+        override fun close() {
+            jis.close()
+        }
+
+        init {
+            entryMap = LinkedHashMap()
+            var entry: JarEntry
+            while (jis.nextJarEntry.also { entry = it } != null) {
+                entryMap!![entry.name] = JarMapEntry(entry, jis)
             }
         }
+    }
 
-        @Override
-        public Manifest getManifest() {
-            return jis.getManifest();
+    class JarMapEntry : JarEntry {
+        var data: ByteArrayStream
+
+        internal constructor(je: JarEntry?, `is`: InputStream?) : super(je) {
+            data = ByteArrayStream()
+            data.readFrom(`is`!!)
         }
 
-        @Override
-        public Enumeration<JarEntry> entries() {
-            return Collections.enumeration(entryMap.values());
-        }
-
-        @Override
-        public void close() throws IOException {
-            jis.close();
+        internal constructor(s: String?) : super(s) {
+            data = ByteArrayStream()
         }
     }
 
-    private static class JarMapEntry extends JarEntry {
-
-        ByteArrayStream data;
-
-        JarMapEntry(JarEntry je, InputStream is) {
-            super(je);
-            data = new ByteArrayStream();
-            data.readFrom(is);
+    companion object {
+        @Throws(IOException::class)
+        fun open(file: File?, verify: Boolean): JarMap {
+            return FileMap(file, verify, ZipFile.OPEN_READ)
         }
 
-        JarMapEntry(String s) {
-            super(s);
-            data = new ByteArrayStream();
+        @Throws(IOException::class)
+        fun open(`is`: InputStream?, verify: Boolean): JarMap {
+            return StreamMap(`is`, verify)
         }
     }
 }

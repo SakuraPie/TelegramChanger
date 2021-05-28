@@ -156,9 +156,9 @@ class MainActivity : AppCompatActivity() {
     ): Boolean {
         try {
             val jar = JarMap.open(apk, true)
-            val je = jar.getJarEntry("AndroidManifest.xml")
+            val je = jar.getJarEntry("AndroidManifest.xml")!!
 //            val je = jar.getJarEntry("resources.arsc")
-            val xml = AXML(jar.getRawData(je))
+            val xml = AXML(jar.getRawData(je)!!)
 
             if (!xml.findAndPatch(oldPkgName to newPkgName, oldLabel.toString() to newLabel.toString())){
                 return false
