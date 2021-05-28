@@ -497,7 +497,7 @@ object SignApk {
     @Throws(Exception::class)
     fun sign(
         cert: X509Certificate?, key: PrivateKey?,
-        inputJar: JarMap, outputFile: FileOutputStream
+        inputJar: JarMap, outputFile: OutputStream
     ) {
         val alignment = 4
         var hashes = 0

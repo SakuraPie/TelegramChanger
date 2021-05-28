@@ -3,7 +3,7 @@
     <string name="app_name">Telegram Changer</string>
     <string name="package_name">应用包名</string>
     <string name="generate_package_name">生成包名</string>
-    <string name="apk_file">Apk文件</string>
+    <string name="apk_file">未选中！</string>
     <string name="select">选择</string>
     <string name="generate">生成</string>
     <string name="or">或</string>
@@ -23,6 +23,9 @@
     <string name="download_complete">下载完成</string>
     <string name="main_input_hint">请输入内容。</string>
     <string name="main_package_name_error">应用包名格式错误。正确格式例：com.xxx.xxx</string>
-    <string name="generate_success">生成成功！在 /Android/data/com.android.telegramchanger/cache/out.apk</string>
+    <string name="generate_success">生成成功！</string>
     <string name="about_lib_header">感谢：</string>
+    <string name="generate_select_error">请选择生成安装包的路径。</string>
+    <string name="generate_error_out_file_name">不是一个apk文件。</string>
+    <string name="selected">已选中！</string>
 </resources>
