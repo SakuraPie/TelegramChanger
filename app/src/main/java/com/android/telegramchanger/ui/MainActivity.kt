@@ -6,10 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -142,6 +139,20 @@ class MainActivity : AppCompatActivity() {
                 writeApkLauncher.launch("out.apk")
             }
         }
+
+        findViewById<ImageButton>(R.id.generate_package_name).setOnClickListener {
+            pkgName.setText(generatePackageName())
+        }
+    }
+
+    private fun generatePackageName(): String {
+        val seedFirst:List<String> = listOf("com", "org")
+        val seedMid: List<String> = listOf("xuexi", "huawei", "xiaomi", "henan", "fujian",
+            "cloud", "guangxi", "tencent", "baidu", "meituan")
+        val seedEnd: List<String> = listOf("books", "editor", "party", "dangjian", "browser",
+            "manager", "viewer", "tools", "photo", "calender", "weather")
+
+        return "${seedFirst.random()}.${seedMid.random()}.${seedEnd.random()}"
     }
 
     override fun onResume() {
